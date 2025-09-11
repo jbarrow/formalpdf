@@ -1,7 +1,7 @@
 # conformal
 
 `conformal` is an Apache-licensed python library for PDF forms.
-It's a 
+It's a unified API for extracting, creating, filling, and flattening forms. 
 It has a similar, but _not_ drop-in, high-level API to PyMuPDF.
 All of this is possible by wrapping `pdfium`, thanks to the low-level bindings made available through `pypdfium2`.
 
