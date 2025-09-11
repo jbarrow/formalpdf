@@ -1,12 +1,10 @@
 [project]
-name = "commonforms"
+name = "formalpdf"
 version = "0.1.0"
-description = "Add your description here"
+description = "An Apache-licensed package for extracting, creating, filling, and flattening PDF Forms."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
-    "pillow>=11.3.0",
-    "pypdf2>=3.0.1",
     "pypdfium2==5.0.0b2",
 ]
 

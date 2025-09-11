@@ -1,6 +1,6 @@
-# conformal
+# formalpdf
 
-`conformal` is an Apache-licensed python library for PDF forms.
+`formalpdf` is an Apache-licensed python library for PDF forms.
 It's a unified API for extracting, creating, filling, and flattening forms. 
 It has a similar, but _not_ drop-in, high-level API to PyMuPDF.
 All of this is possible by wrapping `pdfium`, thanks to the low-level bindings made available through `pypdfium2`.
@@ -9,7 +9,7 @@ All of this is possible by wrapping `pdfium`, thanks to the low-level bindings m
 
 
 ```sh
-uv pip install conformal
+uv pip install formalpdf
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ doc = Document("/path/to/your.pdf")
 pdfium_doc = doc.document
 ```
 
-You can use this to do lower-level operations that aren't yet supported by `conformal`.
+You can use this to do lower-level operations that aren't yet supported by `formalpdf`.
 
 ## Roadmap
 
