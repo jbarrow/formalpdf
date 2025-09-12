@@ -57,6 +57,26 @@ Widget(
 )
 ```
 
+
+### Filling out Forms: Updating `Widget` Values
+
+Let's say we had some textbox widget:
+
+```py
+w = doc[0].widgets()[0]
+```
+
+We can update it with:
+
+```py
+w.update("New Value")
+
+doc.save("new_doc.pdf")
+```
+
+And when we open `new_doc.pdf` we'll find a the value filled out!
+
+
 ### Navigating Unsupported Operations
 
 You can access the raw `PdfDocument` from `pypdfium2` using by calling:
