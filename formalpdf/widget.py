@@ -161,9 +161,3 @@ class Widget:
             rect=rect,
         )
 
-
-
-pdf = Document("/Users/jbarrow/Projects/forml/raw_pdfs/aetna/a.pdf")
-
-for page in pdf:
-    print(page.widgets())

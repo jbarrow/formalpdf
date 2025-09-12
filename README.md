@@ -17,6 +17,8 @@ uv pip install formalpdf
 ### Get All `Widget` Objects in a PDF
 
 ```py
+from formalpdf import Document
+
 doc = Document("/path/to/your.pdf")
 
 for page in doc:
@@ -28,6 +30,8 @@ for page in doc:
 You can access the raw `PdfDocument` from `pypdfium2` using by calling:
 
 ```py
+from formalpdf import Document
+
 doc = Document("/path/to/your.pdf")
 
 pdfium_doc = doc.document
