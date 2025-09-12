@@ -82,10 +82,22 @@ bmp = pdfium_doc[0].render(scale=scale)
 pil = bmp.to_pil()
 ```
 
+## Testing
+
+```
+uv run pytest
+```
+
+There are a large number of test PDFs found in `tests/data`.
+
+
 ## Roadmap
 
 - [x] create PyPI package
-- [ ] finish widget extraction 
+- [x] finish widget extraction 
 - [ ] widget updating
+  - [x] textbox
+  - [ ] checkbox
+  - [ ] combobox
 - [ ] widget creation
-- [ ] tests
+- [x] tests

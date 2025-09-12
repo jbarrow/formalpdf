@@ -11,4 +11,15 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ruff>=0.13.0",
+    "pytest>=8.0.0",
 ]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+addopts = "-q"
+
+[build-system]
+requires = ["hatchling>=1.21.1"]
+build-backend = "hatchling.build"
