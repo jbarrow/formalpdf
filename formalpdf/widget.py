@@ -44,6 +44,25 @@ class Document:
     def page(self, number: int) -> Page:
         return Page(self.document[number], self, number=number)
     
+    def __getitem__(self, key):
+        """
+        Support indexing like doc[n] and slicing like doc[start:stop].
+        Returns Page for int indices, and a list[Page] for slices.
+        """
+        if isinstance(key, slice):
+            # Normalize slice to a range of valid indices
+            start, stop, step = key.indices(len(self))
+            return [self.page(i) for i in range(start, stop, step)]
+        if not isinstance(key, int):
+            raise TypeError("Document indices must be integers or slices")
+
+        if key < 0:
+            key += len(self)
+        if key < 0 or key >= len(self):
+            raise IndexError("Document index out of range")
+
+        return self.page(key)
+    
     def __len__(self) -> int:
         return len(self.document)
 
