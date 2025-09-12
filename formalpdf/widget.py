@@ -1,13 +1,13 @@
 from __future__ import annotations
 from dataclasses import dataclass
-import ctypes
+from typing import Iterator, List, Optional
 
 from .utils import get_pdfium_string
-from typing import Iterator, List, Optional
 
 import pypdfium2.raw as pdfium_c
 import pypdfium2.internal as pdfium_i
 import pypdfium2 as pdfium
+import ctypes
 
 
 FieldTypeToStr = {
