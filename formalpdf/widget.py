@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .utils import get_pdfium_string
+from typing import Iterator, List, Optional
 
 import pypdfium2.raw as pdfium_c
 import pypdfium2.internal as pdfium_i
@@ -9,8 +10,14 @@ import pypdfium2 as pdfium
 
 
 FieldTypeToStr = {
-    0: "",
-    1: "",
+    pdfium_c.FPDF_FORMFIELD_UNKNOWN: "Unknown",
+    pdfium_c.FPDF_FORMFIELD_PUSHBUTTON: "PushButton",
+    pdfium_c.FPDF_FORMFIELD_CHECKBOX: "CheckBox",
+    pdfium_c.FPDF_FORMFIELD_RADIOBUTTON: "RadioButton",
+    pdfium_c.FPDF_FORMFIELD_COMBOBOX: "ComboBox",
+    pdfium_c.FPDF_FORMFIELD_LISTBOX: "ListBox",
+    pdfium_c.FPDF_FORMFIELD_TEXTFIELD: "Text",
+    pdfium_c.FPDF_FORMFIELD_SIGNATURE: "Signature",
 }
 
 
@@ -119,7 +126,7 @@ class Widget:
     field_name: str
     field_label: str
     field_value: str
-    # choice_values: list
+    choice_values: Optional[List[str]]
     # field_flags: int
     field_type: int
     field_type_string: str | None
@@ -150,7 +157,19 @@ class Widget:
             pdfium_c.FPDFAnnot_GetFormFieldAlternateName, formenv.raw, annotation
         )
 
-        print(pdfium_c.FPDFAnnot_GetOptionCount(formenv.raw, annotation))
+        choice_values: Optional[List[str]] = None
+        try:
+            option_count = pdfium_c.FPDFAnnot_GetOptionCount(formenv.raw, annotation)
+        except Exception:
+            option_count = 0
+
+        if option_count and option_count > 0:
+            choice_values = []
+            for i in range(option_count):
+                label = get_pdfium_string(
+                    pdfium_c.FPDFAnnot_GetOptionLabel, formenv.raw, annotation, i
+                )
+                choice_values.append(label)
 
         return cls(
             field_name=field_name,
@@ -158,6 +177,7 @@ class Widget:
             field_value=field_value,
             field_type=field_type,
             field_type_string=field_type_string,
+            choice_values=choice_values,
             rect=rect,
         )
 
