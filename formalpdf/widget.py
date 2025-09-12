@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+import ctypes
 
 from .utils import get_pdfium_string
 from typing import Iterator, List, Optional
@@ -54,8 +55,16 @@ class Document:
     def is_tagged(self) -> bool:
         return bool(pdfium_c.FPDFCatalog_IsTagged(self.document))
 
-    def save(self, dest, version):
-        pass
+    def save(self, dest, version=None, flags: int = 0):
+        """
+        Persist the current document (including any widget updates) to disk or a
+        file-like object.
+
+        - dest: path-like or binary file-like object
+        - version: passed through to pypdfium2
+        - flags: optional save flags passed through to pypdfium2
+        """
+        return self.document.save(dest, version=version, flags=flags)
 
     
 class Page:
@@ -132,8 +141,33 @@ class Widget:
     field_type_string: str | None
     rect: Rect
 
-    def update():
-        pass
+    # keep a reference to the underlying PDFium annotation so we can mutate it
+    _annotation: object | None = None
+
+    def update(self, value: str) -> None:
+        """
+        Update the widget's value in-place for text fields.
+
+        Currently only supports textboxes (FPDF_FORMFIELD_TEXTFIELD).
+        """
+        if self.field_type != pdfium_c.FPDF_FORMFIELD_TEXTFIELD:
+            raise NotImplementedError("update() currently supports only textboxes")
+
+        if self._annotation is None:
+            raise RuntimeError("Underlying annotation handle is missing; cannot update.")
+
+        # PDFium expects a UTF-8 C string for the key and a UTF-16-LE wide string for the value.
+        key = b"V"  # the standard PDF key for a field's value
+        utf16 = value.encode("utf-16-le") + b"\x00\x00"
+        buffer = ctypes.create_string_buffer(utf16)
+        buffer_ptr = ctypes.cast(buffer, ctypes.POINTER(pdfium_c.FPDF_WCHAR))
+
+        ok = pdfium_c.FPDFAnnot_SetStringValue(self._annotation, key, buffer_ptr)
+        if not ok:
+            raise RuntimeError("PDFium failed to set the text field value")
+
+        # reflect the change in our Python object
+        self.field_value = value
 
     def reset():
         pass
@@ -179,5 +213,6 @@ class Widget:
             field_type_string=field_type_string,
             choice_values=choice_values,
             rect=rect,
+            _annotation=annotation,
         )
 
