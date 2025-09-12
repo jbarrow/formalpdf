@@ -19,7 +19,15 @@ uv pip install formalpdf
 pip install formalpdf
 ```
 
-## Usage
+## CLI Usage
+
+🚧 Soon you can use `formalpdf` to fill a PDF from an FDF document using:
+
+```sh
+formalpdf fill <input.pdf> <input.fdf> <output.pdf>
+```
+
+## Programmatic Usage
 
 ### Get All `Widget` Objects in a PDF
 
@@ -55,6 +63,7 @@ Widget(
         right=587.177978515625
     )
 )
+
 ```
 
 
@@ -76,6 +85,17 @@ doc.save("new_doc.pdf")
 
 And when we open `new_doc.pdf` we'll find a the value filled out!
 
+### Creating Forms
+
+🚧 Work in Progress
+
+### Adding Annotations (Highlights, Links, etc.)
+
+🚧 Work in Progress
+
+### Rendering, Extracting Text, Extracting Images
+
+🚧 Work in Progress
 
 ### Navigating Unsupported Operations
 
