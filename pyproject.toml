@@ -12,6 +12,7 @@ dependencies = [
 dev = [
     "ruff>=0.13.0",
     "pytest>=8.0.0",
+    "pre-commit>=4.3.0",
 ]
 
 [tool.pytest.ini_options]
