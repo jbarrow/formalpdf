@@ -48,7 +48,12 @@ Widget(
     # widget type string value 
     field_type_string='Text',
     # widget location Rect
-    rect=Rect(top=36.95610046386719, left=473.5320129394531, bottom=24.171100616455078, right=587.177978515625)
+    rect=Rect(
+        top=36.95610046386719,
+        left=473.5320129394531,
+        bottom=24.171100616455078,
+        right=587.177978515625
+    )
 )
 ```
 
