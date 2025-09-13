@@ -1,6 +1,6 @@
 [project]
 name = "formalpdf"
-version = "0.1.2"
+version = "0.1.2a"
 description = "An Apache-licensed package for extracting, creating, filling, and flattening PDF Forms."
 readme = "README.md"
 requires-python = ">=3.11"
