@@ -1,25 +1,14 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterator, List, Optional
+from PIL import Image
 
-from .utils import get_pdfium_string
+from .utils import get_pdfium_string, FieldTypeToStr
 
 import pypdfium2.raw as pdfium_c
 import pypdfium2.internal as pdfium_i
 import pypdfium2 as pdfium
 import ctypes
-
-
-FieldTypeToStr = {
-    pdfium_c.FPDF_FORMFIELD_UNKNOWN: "Unknown",
-    pdfium_c.FPDF_FORMFIELD_PUSHBUTTON: "PushButton",
-    pdfium_c.FPDF_FORMFIELD_CHECKBOX: "CheckBox",
-    pdfium_c.FPDF_FORMFIELD_RADIOBUTTON: "RadioButton",
-    pdfium_c.FPDF_FORMFIELD_COMBOBOX: "ComboBox",
-    pdfium_c.FPDF_FORMFIELD_LISTBOX: "ListBox",
-    pdfium_c.FPDF_FORMFIELD_TEXTFIELD: "Text",
-    pdfium_c.FPDF_FORMFIELD_SIGNATURE: "Signature",
-}
 
 
 class Document:
@@ -76,12 +65,7 @@ class Document:
 
     def save(self, dest, version=None, flags: int = 0):
         """
-        Persist the current document (including any widget updates) to disk or a
-        file-like object.
-
-        - dest: path-like or binary file-like object
-        - version: passed through to pypdfium2
-        - flags: optional save flags passed through to pypdfium2
+        Save the current document (pass-through to pypdfium2)
         """
         return self.document.save(dest, version=version, flags=flags)
 
@@ -112,18 +96,16 @@ class Page:
 
         return widgets
 
-    @property
-    def cropbox(self):
-        ...
-
-    @property
-    def trimbox(self):
-        ...
-
-    @property
-    def bleedbox(self):
-        ...
-
+    def render(
+            self,
+            dpi: int = 72
+    ) -> Image.Image:
+        bitmap = self._page.render(
+            scale = dpi / 72,
+            rotation = 0
+        )
+        pil_image = bitmap.to_pil()
+        return pil_image
 
 
 class Point:

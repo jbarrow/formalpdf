@@ -25,3 +25,6 @@ def test_open_and_list_widgets(pdf_path: Path):
         assert total == 0
     else:
         assert total >= 0
+
+
+

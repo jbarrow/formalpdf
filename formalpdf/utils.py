@@ -4,6 +4,18 @@ import pypdfium2.raw as pdfium_c
 import ctypes
 
 
+FieldTypeToStr = {
+    pdfium_c.FPDF_FORMFIELD_UNKNOWN: "Unknown",
+    pdfium_c.FPDF_FORMFIELD_PUSHBUTTON: "PushButton",
+    pdfium_c.FPDF_FORMFIELD_CHECKBOX: "CheckBox",
+    pdfium_c.FPDF_FORMFIELD_RADIOBUTTON: "RadioButton",
+    pdfium_c.FPDF_FORMFIELD_COMBOBOX: "ComboBox",
+    pdfium_c.FPDF_FORMFIELD_LISTBOX: "ListBox",
+    pdfium_c.FPDF_FORMFIELD_TEXTFIELD: "Text",
+    pdfium_c.FPDF_FORMFIELD_SIGNATURE: "Signature",
+}
+
+
 def get_pdfium_string(f: Callable, *args) -> str:
     """
     get_pdfium_string
