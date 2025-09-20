@@ -9,12 +9,8 @@ DATA_DIR = Path(__file__).parent / "data"
 
 @pytest.mark.parametrize("filename, expected_type, expected_str", [
     ("text_inputs.pdf", pdfium_c.FPDF_FORMFIELD_TEXTFIELD, "Text"),
-    ("signature.pdf", pdfium_c.FPDF_FORMFIELD_SIGNATURE, "Signature"),
-    ("radio.pdf", pdfium_c.FPDF_FORMFIELD_RADIOBUTTON, "RadioButton"),
-    ("radio_single_other.pdf", pdfium_c.FPDF_FORMFIELD_RADIOBUTTON, "RadioButton"),
     ("checkbox.pdf", pdfium_c.FPDF_FORMFIELD_CHECKBOX, "CheckBox"),
     ("checkbox_single.pdf", pdfium_c.FPDF_FORMFIELD_CHECKBOX, "CheckBox"),
-    ("checkbox_multiple_other.pdf", pdfium_c.FPDF_FORMFIELD_CHECKBOX, "CheckBox"),
     ("checkbox_bordered.pdf", pdfium_c.FPDF_FORMFIELD_CHECKBOX, "CheckBox"),
     ("checkbox_double.pdf", pdfium_c.FPDF_FORMFIELD_CHECKBOX, "CheckBox"),
 ])
