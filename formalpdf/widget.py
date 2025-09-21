@@ -195,19 +195,16 @@ class Widget:
         choice_values: Optional[List[str]] = None
         option_count = 0
 
-        # TODO(joe): getting the option count is causing pdfium to crash on some widgets
-        # try:
-        #    option_count = pdfium_c.FPDFAnnot_GetOptionCount(formenv.raw, annotation)
-        # except Exception:
-        #    option_count = 0
+        if field_type in {pdfium_c.FPDF_FORMFIELD_COMBOBOX, pdfium_c.FPDF_FORMFIELD_LISTBOX}:
+            option_count = pdfium_c.FPDFAnnot_GetOptionCount(formenv.raw, annotation)
 
-        if option_count and option_count > 0:
-            choice_values = []
-            for i in range(option_count):
-                label = get_pdfium_string(
-                    pdfium_c.FPDFAnnot_GetOptionLabel, formenv.raw, annotation, i
-                )
-                choice_values.append(label)
+            if option_count and option_count > 0:
+                choice_values = []
+                for i in range(option_count):
+                    label = get_pdfium_string(
+                        pdfium_c.FPDFAnnot_GetOptionLabel, formenv.raw, annotation, i
+                    )
+                    choice_values.append(label)
 
         return cls(
             field_name=field_name,
