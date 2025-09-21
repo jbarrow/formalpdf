@@ -6,8 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "pillow>=11.3.0",
-    "pypdfium2>=4",
-    "pytest>=8.4.2",
+    "pypdfium2>=4.30",
 ]
 
 [dependency-groups]
