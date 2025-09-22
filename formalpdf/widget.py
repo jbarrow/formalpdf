@@ -11,10 +11,18 @@ import pypdfium2 as pdfium
 import ctypes
 
 
+def open(path: str | Path | None = None) -> Document:
+    return Document(path)
+
+
+
 class Document:
-    def __init__(self, path: str):
-        self.document = pdfium.PdfDocument(path)
-        self._init_formenv()
+    def __init__(self, path: str | Path | None = None):
+        if path:
+            self.document = pdfium.PdfDocument(path)
+            self._init_formenv()
+        else:
+            self.document = pdfium.PdfDocument.new()
 
     def _init_formenv(self):
         if self.form_type is not None:
@@ -69,6 +77,30 @@ class Document:
         """
         return self.document.save(dest, version=version, flags=flags)
 
+    def insert_pdf(
+        self,
+        other: Document,
+        *,
+        index: int | None = None,
+        from_page: int | None = None,
+        to_page: int | None = None
+    ) -> None:
+        """
+        Insert pages from one PDF into another PDF, optionally at a specified index. If index is None,
+        the pages will be appended to the PDF.
+        """
+        if not from_page:
+            from_page = 0
+        if not to_page:
+            to_page = len(other)
+
+        page_range = list(range(from_page, to_page))
+
+        self.document.import_pages(
+            other.document,
+            pages=page_range,
+            index=index
+        )
     
 class Page:
     """

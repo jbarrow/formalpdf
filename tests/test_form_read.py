@@ -1,6 +1,6 @@
 import pytest
+import formalpdf
 
-from formalpdf import Document
 from pathlib import Path
 
 
@@ -13,7 +13,7 @@ def _all_pdf_paths() -> list[Path]:
 
 @pytest.mark.parametrize("pdf_path", _all_pdf_paths(), ids=lambda p: p.name)
 def test_open_and_list_widgets(pdf_path: Path):
-    doc = Document(str(pdf_path))
+    doc = formalpdf.open(pdf_path) 
 
     total = 0
     for page in doc:
