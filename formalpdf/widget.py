@@ -11,10 +11,18 @@ import pypdfium2 as pdfium
 import ctypes
 
 
+def open(path: str | Path | None = None) -> Document:
+    return Document(path)
+
+
+
 class Document:
-    def __init__(self, path: str):
-        self.document = pdfium.PdfDocument(path)
-        self._init_formenv()
+    def __init__(self, path: str | Path | None = None):
+        if path:
+            self.document = pdfium.PdfDocument(path)
+            self._init_formenv()
+        else:
+            self.document = pdfium.PdfDocument.new()
 
     def _init_formenv(self):
         if self.form_type is not None:

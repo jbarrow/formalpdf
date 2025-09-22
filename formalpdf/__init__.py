@@ -1,1 +1,1 @@
-from .widget import Document, Page, Widget, Rect
+from .widget import Document, Page, Widget, Rect, open

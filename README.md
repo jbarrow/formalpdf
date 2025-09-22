@@ -32,9 +32,9 @@ formalpdf fill <input.pdf> <input.fdf> <output.pdf>
 ### Get All `Widget` Objects in a PDF
 
 ```py
-from formalpdf import Document
+import formalpdf
 
-doc = Document("/path/to/your.pdf")
+doc = formalpdf.open("path/to/document.pdf") 
 
 for page in doc:
     widgets = page.widgets()
@@ -113,9 +113,9 @@ You can use this to do lower-level operations that aren't yet supported by `form
 For instance, if you want to render the first page of the document (currently an unsupported option):
 
 ```py
-from formalpdf import Document
+import formalpdf
 
-doc = Document("/path/to/your.pdf")
+doc = formalpdf.open("path/to/document.pdf")
 
 pdfium_doc = doc.document
 bmp = pdfium_doc[0].render(scale=scale)
