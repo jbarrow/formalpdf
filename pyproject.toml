@@ -1,9 +1,9 @@
 [project]
 name = "formalpdf"
-version = "0.1.5"
+version = "0.1.6"
 description = "An Apache-licensed package for extracting, creating, filling, and flattening PDF Forms."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 dependencies = [
     "pillow>=11.3.0",
     "pypdfium2>=4.30",
